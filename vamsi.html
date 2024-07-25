@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEND MAIL</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <form onsubmit="vamsi(event)">
+        <h1>SEND MAIL FOR YOU LOVED ONES😍😍</h1>
+        <input id="sender" type="text" placeholder="Enter your email address">
+        <input id="name" type="text" placeholder="Enter your name">
+        <input id="yours" type="text" placeholder="Your Email address where users can send their reply">
+        <input id="title" type="text" placeholder="Put Your Title Here">
+        <input id="body" type="text" placeholder="Enter the body">
+        <button type="submit" class="send" id="send">send</button>
+    </form>
+<script>
+    async function vamsi(event) {
+        event.preventDefault();
+        
+        const sender = document.getElementById("sender").value;
+        const name = document.getElementById("name").value;
+        const yours = document.getElementById("yours").value;
+        const title = document.getElementById("title").value;
+        const body = document.getElementById("body").value;
+
+        try {
+            const url = 'https://mail-sender-api1.p.rapidapi.com/';
+            const options = {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json',
+                    'X-RapidAPI-Key': '79b4ffd175msh3ba6f689c658b8ap1d0361jsn85f2286ef66f',
+                    'X-RapidAPI-Host': 'mail-sender-api1.p.rapidapi.com'
+                },
+                body: JSON.stringify({
+                    sendto: sender,
+                    name: name,
+                    replyTo: yours,
+                    ishtml: 'false',
+                    title: title,
+                    body: body
+                })
+            };
+            
+            const response = await fetch(url, options);
+            
+            if (!response.ok) {
+                throw new Error("It is invalid, please enter again");
+            }
+            const data = await response.json();
+            console.log(data);
+            alert("Email sent successfully!");
+
+
+        } catch (error) {
+            console.log(error);
+            alert(error.message);
+        }
+    }
+</script>
+
+</body>
+</html>
